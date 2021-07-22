@@ -1,13 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
 //import 'package:firebase_auth/firebase_auth.dart';
 
 
 Future<void> main() async {
   runApp(MyApp());
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
 }
 
 class MyApp extends StatelessWidget {
@@ -37,22 +40,59 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  var firestore = FirebaseFirestore.instance;
+  // var firestore = FirebaseFirestore.instance;
 
-  void addfunction()
+  // void addfunction()
 
-  {
-    var newmap = {'firstname': 'tanishka', 'lastname':'vaswani'};
-    firestore.collection('firstcolection').add(newmap);
+  // {
+  //   var newmap = {'firstname': 'tanishka', 'lastname':'vaswani'};
+  //   firestore.collection('firstcolection').add(newmap);
+  // }
+
+  // void setfunction() async
+
+  // {
+  //   QuerySnapshot retrievedmap = await firestore.collection('firstcolection').get();
+  //   DocumentSnapshot retrievedmap2 = await firestore.collection('firstcolection').doc('87o8QCUgN17fTkyxZHO3').get();
+  //   print(retrievedmap2['firstname']);
+  //   print(retrievedmap2['lastname']);
+
+  //   print(retrievedmap.docs[0]);
+  // }
+
+
+  void apifunction() async {
+    //var url =
+    //Uri.https('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=456001&date=31-03-2021');
+
+    var url = Uri.parse('https://catfact.ninja/fact');
+
+    // Await the http get response, then decode the json-formatted response.
+    var response = await http.get(url);
+    var body = response.body;
+    print(body);
+
+    // var a =jsonDecode(body);
+    // print(a['sessions'][0]);
+
+
+
+    var urltwo = Uri.parse('https://www.boredapi.com/api/activity');
+    var responsetwo = await http.get(urltwo);
+    var bodytwo = responsetwo.body;
+    print(bodytwo);
+    var a = jsonDecode(bodytwo);
+    print(a['activity']);
+
+    var urlthree = Uri.parse('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=456001&date=31-03-2021');
+    var responsethree = await http.get(urlthree);
+    var bodythree = responsethree.body;
+    print(bodythree);
+
+
+
   }
 
-  void setfunction() async
-
-  {
-    DocumentSnapshot retrievedmap = await firestore.collection('firstcolection').doc('87o8QCUgN17fTkyxZHO3').get();
-    print(retrievedmap['firstname']);
-    print(retrievedmap['lastname']);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +106,12 @@ class _MyHomePageState extends State<MyHomePage> {
           SizedBox(height:50),
           TextButton(onPressed: (){
             main();
-            setfunction();
-          }, child: Text('retrive'))
+            apifunction();
+            //setfunction();
+          },
+              child:
+              Text('retrive')
+          ),
         ],
       ),
 
