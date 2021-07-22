@@ -89,6 +89,13 @@ class _MyHomePageState extends State<MyHomePage> {
     var bodythree = responsethree.body;
     print(bodythree);
 
+    var urlfour = Uri.parse('https://api.weatherapi.com/v1/current.json?key=8d234f8581d64529a9b192245212207&q=London&aqi=no');
+    var responsefour = await http.get(urlfour);
+    var bodyfour = responsefour.body;
+    print(bodyfour);
+    var b = jsonDecode(bodyfour);
+    print(b['location']['name']);
+
 
 
   }
